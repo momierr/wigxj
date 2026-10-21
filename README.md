@@ -2,7 +2,7 @@
 
 Fast Wigner 3j, 6j, 9j symbols and Clebsch-Gordan coefficients for Python.
 
-Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL) for speed.
+Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL, see src/wigner/_ext/wigxjpf/COPYING.LESSER) for speed.
 Falls back to a pure-Python implementation if no C compiler is available.
 
 ## Installation
