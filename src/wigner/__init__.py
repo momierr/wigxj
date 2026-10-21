@@ -10,6 +10,9 @@ except ImportError:
             "wigner9j requires the C extension — reinstall with a C compiler available"
         )
 
+    def init(max_j):
+        pass #pure backend has no precomputed tables
+
     _backend = "pure"
 
-__all__ = ["wigner3j", "wigner6j", "wigner9j", "clebsch_gordan"]
+__all__ = ["wigner3j", "wigner6j", "wigner9j", "clebsch_gordan", "init"]

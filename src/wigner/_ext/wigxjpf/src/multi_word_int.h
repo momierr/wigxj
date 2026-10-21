@@ -92,6 +92,8 @@ struct multi_word_int
 static inline void mwi_realloc(struct multi_word_int *mwi,
 			       size_t min_alloc)
 {
+  mwi_u_word_t *tmp;
+
   if (mwi->nalloc >= min_alloc)
     return;
 
@@ -100,9 +102,9 @@ static inline void mwi_realloc(struct multi_word_int *mwi,
 
   size_t alloc_size = mwi->nalloc * sizeof (mwi_u_word_t);
 
-  mwi->w = (mwi_u_word_t*) realloc (mwi->w, alloc_size);
+  tmp = (mwi_u_word_t*) realloc (mwi->w, alloc_size);
 
-  if (mwi->w == NULL)
+  if (tmp == NULL)
     {
       fprintf (stderr,
 	       "wigxjpf: "
@@ -110,6 +112,8 @@ static inline void mwi_realloc(struct multi_word_int *mwi,
 	       alloc_size);
       wigxjpf_error();
     }
+
+  mwi->w = tmp;
 }
 
 static inline void mwi_alloc(struct multi_word_int *mwi)

@@ -495,7 +495,7 @@ void calcsum_9j(struct wigxjpf_temp *csi,
 
   /* One could think of doing a first round over the loop, to find out
    * the least common denominator.  That will however not help very
-   * far, as we then just have to explicity multiply it in in each
+   * far, as we then just have to explicitly multiply it in in each
    * term anyhow.  We may as well do just one loop, and calculate each
    * term (product of the non-prefactor part of three 6js).  For each
    * such term, we then scale it (and the previous sum) to the new

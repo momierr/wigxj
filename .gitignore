@@ -6,3 +6,8 @@ dist/
 build/
 .eggs/
 .claude/
+compile_flags.txt
+.clangd
+# pixi environments
+.pixi/*
+!.pixi/config.toml

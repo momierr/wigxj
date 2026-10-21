@@ -1,7 +1,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
-#include <math.h>
 #include "wigxjpf.h"
+#include <math.h>
 
 static int g_max_two_j = 400;
 static int g_initialized = 0;
@@ -14,10 +14,26 @@ static void _cleanup(void) {
     }
 }
 
+static int _check_j(int n, const double *js) {
+    for (int i = 0; i < n; i++) {
+        if (lround(2*js[i]) > g_max_two_j) {
+            PyErr_Format(PyExc_ValueError,
+                        "j exceeds max_j=%d; call wigner.init(max_j) first",
+                        g_max_two_j / 2);
+            return -1;
+        }
+    }
+    return 0;
+}
+
 static PyObject *py_init(PyObject *self, PyObject *args) {
     int max_j;
     if (!PyArg_ParseTuple(args, "i", &max_j))
         return NULL;
+    if (max_j < 0) {
+        PyErr_SetString(PyExc_ValueError, "max_j must be >= 0");
+        return NULL;
+    }
     _cleanup();
     g_max_two_j = 2 * max_j;
     wig_table_init(g_max_two_j, 9);
@@ -30,6 +46,10 @@ static PyObject *py_wigner3j(PyObject *self, PyObject *args) {
     double j1, j2, j3, m1, m2, m3;
     if (!PyArg_ParseTuple(args, "dddddd", &j1, &j2, &j3, &m1, &m2, &m3))
         return NULL;
+    double js[] = {j1, j2, j3};
+    if (_check_j(3, js) < 0) {
+        return NULL;
+    }
     return PyFloat_FromDouble(wig3jj(
         (int)lround(2*j1), (int)lround(2*j2), (int)lround(2*j3),
         (int)lround(2*m1), (int)lround(2*m2), (int)lround(2*m3)));
@@ -39,6 +59,10 @@ static PyObject *py_wigner6j(PyObject *self, PyObject *args) {
     double j1, j2, j3, j4, j5, j6;
     if (!PyArg_ParseTuple(args, "dddddd", &j1, &j2, &j3, &j4, &j5, &j6))
         return NULL;
+    double js[] = {j1, j2, j3, j4, j5, j6};
+    if (_check_j(6, js) < 0) {
+        return NULL;
+    }
     return PyFloat_FromDouble(wig6jj(
         (int)lround(2*j1), (int)lround(2*j2), (int)lround(2*j3),
         (int)lround(2*j4), (int)lround(2*j5), (int)lround(2*j6)));
@@ -49,6 +73,10 @@ static PyObject *py_wigner9j(PyObject *self, PyObject *args) {
     if (!PyArg_ParseTuple(args, "ddddddddd",
                           &j1, &j2, &j3, &j4, &j5, &j6, &j7, &j8, &j9))
         return NULL;
+    double js[] = {j1, j2, j3, j4, j5, j6, j7, j8, j9};
+    if (_check_j(9, js) < 0) {
+        return NULL;
+    }
     return PyFloat_FromDouble(wig9jj(
         (int)lround(2*j1), (int)lround(2*j2), (int)lround(2*j3),
         (int)lround(2*j4), (int)lround(2*j5), (int)lround(2*j6),
@@ -59,6 +87,10 @@ static PyObject *py_clebsch_gordan(PyObject *self, PyObject *args) {
     double j1, m1, j2, m2, j3, m3;
     if (!PyArg_ParseTuple(args, "dddddd", &j1, &m1, &j2, &m2, &j3, &m3))
         return NULL;
+    double js[] = {j1, j2, j3};
+    if (_check_j(3, js) < 0) {
+        return NULL;
+    }
     double w3j = wig3jj(
         (int)lround(2*j1), (int)lround(2*j2), (int)lround(2*j3),
         (int)lround(2*m1), (int)lround(2*m2), (int)lround(-2*m3));

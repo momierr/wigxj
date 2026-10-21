@@ -14,7 +14,6 @@ ext = Extension(
         f"{_wig_dir}/src/calc.c",
         f"{_wig_dir}/src/trivial_zero.c",
         f"{_wig_dir}/src/c_wrap.c",
-        f"{_wig_dir}/src/fortran_wrap.c",
         f"{_wig_dir}/src/wigxjpf_error.c",
     ],
     include_dirs=[
