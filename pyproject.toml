@@ -41,6 +41,16 @@ where = ["src"]
 [tool.setuptools.package-data]
 wigxj = ["py.typed", "*.pyi"]
 
+[tool.cibuildwheel]
+skip = [
+    "cp3*t-*", # free-threaded: wigxjpf keeps global tables, built without thread support
+    "*-win32", # 32-bit Windows: no recent numpy wheels to test against
+]
+test-requires = ["pytest", "hypothesis", "sympy"]
+test-sources = ["tests"]
+test-command = "pytest tests"
+test-environment = { WIGXJ_REQUIRE_C = "1" }
+
 [tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64", "win-64"]

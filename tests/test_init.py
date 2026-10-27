@@ -1,8 +1,18 @@
+import os
+
 import pytest
 
 from wigxj import _backend, clebsch_gordan, init, wigner3j, wigner6j, wigner9j
 
 c_only = pytest.mark.skipif(_backend != "C", reason="C backend only")
+
+
+@pytest.mark.skipif(
+    not os.environ.get("WIGXJ_REQUIRE_C"), reason="set WIGXJ_REQUIRE_C=1 to require C"
+)
+def test_c_backend_loaded():
+    # optional=True lets a failed C build fall back silently; release wheels must not
+    assert _backend == "C"
 
 
 def test_init_importable():
