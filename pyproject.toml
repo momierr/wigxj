@@ -6,11 +6,25 @@ build-backend = "setuptools.build_meta"
 name = "wigxj"
 version = "0.1.0"
 description = "Fast Wigner 3j, 6j, 9j symbols and Clebsch-Gordan coefficients"
+readme = "README.md"
+license = "MIT AND LGPL-3.0-or-later"
+license-files = ["LICENSE", "src/wigxj/_ext/wigxjpf/COPYING*"]
+authors = [{ name = "Rodolphe Momier", email = "momier.rodolphe@gmail.com" }]
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.20"]
+keywords = ["wigner", "3j", "6j", "9j", "clebsch-gordan", "angular momentum", "quantum physics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: C",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Typing :: Typed",
+]
 
-[project.optional-dependencies]
-dev = ["pytest"]
+[project.urls]
+Repository = "https://github.com/momierr/wigxj"
+Issues = "https://github.com/momierr/wigxj/issues"
 
 [tool.pytest.ini_options]
 # mpmath (pulled in by sympy, used only in tests) calls a function deprecated in Python 3.15
@@ -65,6 +79,7 @@ hypothesis = ">=6.170.12,<7"
 sympy = ">=1.14.0,<2"
 python-build = ">=1.6.1,<2"
 twine = ">=7.0.0,<8"
+pytest = ">=9.1.1,<10"
 
 [tool.pixi.activation.env]
 PIP_CONFIG_FILE = "/dev/null"
