@@ -1,18 +1,20 @@
 import math
 import warnings
+from fractions import Fraction
 
 import numpy as np
 
 
-def delta(a, b, c):
+def _f(x):
+    # Exact factorial; arguments are always whole numbers here (half-integers cancel)
+    return math.factorial(round(x))
+
+
+def _delta2(a, b, c):
+    # Triangle coefficient squared, as an exact fraction
     if a + b < c or a + c < b or b + c < a:
-        return 0
-    return math.sqrt(
-        math.factorial(round(a + b - c))
-        * math.factorial(round(a - b + c))
-        * math.factorial(round(-a + b + c))
-        / math.factorial(round(a + b + c + 1))
-    )
+        return Fraction(0)
+    return Fraction(_f(a + b - c) * _f(a - b + c) * _f(-a + b + c), _f(a + b + c + 1))
 
 
 def wigner3j(j1, j2, j3, m1, m2, m3):
@@ -41,30 +43,29 @@ def wigner3j(j1, j2, j3, m1, m2, m3):
     tmax = round(min(t3, t4, t5))
 
     phase = (-1) ** round(j1 - j2 - m3)
-    d = delta(j1, j2, j3)
 
-    sq = math.sqrt(
-        math.exp(math.lgamma(j1 - m1 + 1))
-        * math.exp(math.lgamma(j1 + m1 + 1))
-        * math.exp(math.lgamma(j2 - m2 + 1))
-        * math.exp(math.lgamma(j2 + m2 + 1))
-        * math.exp(math.lgamma(j3 - m3 + 1))
-        * math.exp(math.lgamma(j3 + m3 + 1))
+    sq2 = (
+        _f(j1 - m1)
+        * _f(j1 + m1)
+        * _f(j2 - m2)
+        * _f(j2 + m2)
+        * _f(j3 - m3)
+        * _f(j3 + m3)
     )
-
-    s = 0.0
-    for k in range(tmin, tmax + 1):
-        X = (
-            math.exp(math.lgamma(k + 1))
-            * math.exp(math.lgamma(j3 - j2 + k + m1 + 1))
-            * math.exp(math.lgamma(j3 - j1 + k - m2 + 1))
-            * math.exp(math.lgamma(j1 + j2 - j3 - k + 1))
-            * math.exp(math.lgamma(j1 - k - m1 + 1))
-            * math.exp(math.lgamma(j2 - k + m2 + 1))
+    s = sum(
+        Fraction(
+            (-1) ** k,
+            _f(k)
+            * _f(j3 - j2 + k + m1)
+            * _f(j3 - j1 + k - m2)
+            * _f(j1 + j2 - j3 - k)
+            * _f(j1 - k - m1)
+            * _f(j2 - k + m2),
         )
-        s += ((-1) ** k) / X
-
-    return phase * d * sq * s
+        for k in range(tmin, tmax + 1)
+    )
+    # Exact up to here: a single rounding to float at the very end
+    return phase * math.copysign(math.sqrt(_delta2(j1, j2, j3) * sq2 * s * s), s)
 
 
 def clebsch_gordan(j1, m1, j2, m2, j3, m3):
@@ -86,26 +87,26 @@ def wigner6j(j1, j2, j3, j4, j5, j6):
 
     sup_ = round(min(t5, t6, t7))
 
-    if (
-        delta(j1, j2, j3) == 0
-        or delta(j1, j5, j6) == 0
-        or delta(j4, j2, j6) == 0
-        or delta(j4, j5, j3) == 0
-    ):
+    d2 = (
+        _delta2(j1, j2, j3)
+        * _delta2(j1, j5, j6)
+        * _delta2(j4, j2, j6)
+        * _delta2(j4, j5, j3)
+    )
+    if d2 == 0:
         return 0
 
-    d = delta(j1, j2, j3) * delta(j1, j5, j6) * delta(j4, j2, j6) * delta(j4, j5, j3)
-    s = 0.0
-    for k in range(inf_, sup_ + 1):
-        X = (
-            math.exp(math.lgamma(k - t1 + 1))
-            * math.exp(math.lgamma(k - t2 + 1))
-            * math.exp(math.lgamma(k - t3 + 1))
-            * math.exp(math.lgamma(k - t4 + 1))
-            * math.exp(math.lgamma(t5 - k + 1))
-            * math.exp(math.lgamma(t6 - k + 1))
-            * math.exp(math.lgamma(t7 - k + 1))
+    s = sum(
+        Fraction(
+            (-1) ** k * _f(k + 1),
+            _f(k - t1)
+            * _f(k - t2)
+            * _f(k - t3)
+            * _f(k - t4)
+            * _f(t5 - k)
+            * _f(t6 - k)
+            * _f(t7 - k),
         )
-        s += (-1) ** k * math.exp(math.lgamma(k + 2)) / X
-
-    return d * s
+        for k in range(inf_, sup_ + 1)
+    )
+    return math.copysign(math.sqrt(d2 * s * s), s)

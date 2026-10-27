@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from wigner import _backend, wigner3j
+from wigner import _backend
 from wigner._pure import wigner3j as wigner3j_pure
 
 TOL = 1e-10
@@ -23,8 +23,8 @@ TOL = 1e-10
         ((0.5, 0.5, 1, 0.5, -0.5, 0), 1.0 / math.sqrt(6.0)),
     ],
 )
-def test_known_values(args, expected):
-    assert abs(wigner3j(*args) - expected) < TOL
+def test_known_values(w, args, expected):
+    assert abs(w.wigner3j(*args) - expected) < TOL
 
 
 @pytest.mark.parametrize(
@@ -38,18 +38,18 @@ def test_known_values(args, expected):
         (1, 1, 2, 2, 0, -2),
     ],
 )
-def test_selection_rules(args):
-    assert wigner3j(*args) == 0
+def test_selection_rules(w, args):
+    assert w.wigner3j(*args) == 0
 
 
-def test_symmetry_time_reversal():
+def test_symmetry_time_reversal(w):
     # (j1 j2 j3 / m1 m2 m3) = (-1)^(j1+j2+j3) (j1 j2 j3 / -m1 -m2 -m3)
     j1, j2, j3, m1, m2, m3 = 2, 1, 2, 1, 0, -1
     phase = (-1) ** int(j1 + j2 + j3)
     assert (
         abs(
-            wigner3j(j1, j2, j3, m1, m2, m3)
-            - phase * wigner3j(j1, j2, j3, -m1, -m2, -m3)
+            w.wigner3j(j1, j2, j3, m1, m2, m3)
+            - phase * w.wigner3j(j1, j2, j3, -m1, -m2, -m3)
         )
         < TOL
     )
@@ -70,3 +70,9 @@ def test_c_matches_pure():
         assert abs(wigner3j_c(*args) - wigner3j_pure(*args)) < TOL, (
             f"mismatch at {args}"
         )
+
+
+@pytest.mark.parametrize("j", [10, 12, 20, 150])
+def test_large_j_closed_form(w, j):
+    # (j j 0 / 0 0 0) = (-1)^j / sqrt(2j+1); the old vendored wigxjpf hung for j >= 12
+    assert abs(w.wigner3j(j, j, 0, 0, 0, 0) - (-1) ** j / math.sqrt(2 * j + 1)) < TOL
