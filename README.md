@@ -1,5 +1,8 @@
 # wigner
 
+[![CI](https://github.com/momierr/wigner/actions/workflows/ci.yml/badge.svg)](https://github.com/momierr/wigner/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Fast Wigner 3j, 6j, 9j symbols and Clebsch-Gordan coefficients for Python.
 
 Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL, see src/wigner/\_ext/wigxjpf/COPYING.LESSER) for speed.
