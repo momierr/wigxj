@@ -1,8 +1,6 @@
 import sys
 
 from setuptools import Extension, setup
-from setuptools.command.build_ext import build_ext
-from setuptools.errors import CCompilerError, ExecError, PlatformError
 
 _ext_dir = "src/wigner/_ext"
 _wig_dir = f"{_ext_dir}/wigxjpf"
@@ -24,20 +22,11 @@ ext = Extension(
     ],
     libraries=[] if sys.platform == "win32" else ["m"],
     extra_compile_args=["-O3"],
+    optional=True,
 )
-
-
-class OptionalBuildExt(build_ext):
-    def build_extension(self, ext):
-        try:
-            super().build_extension(ext)
-        except (CCompilerError, ExecError, PlatformError) as e:
-            print(f"\nWARNING: Could not build C extension ({e})")
-            print("Falling back to pure Python implementation.\n")
 
 
 setup(
     package_dir={"": "src"},
     ext_modules=[ext],
-    cmdclass={"build_ext": OptionalBuildExt},
 )

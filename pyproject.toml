@@ -34,6 +34,11 @@ build = "python setup.py build_ext --inplace"
 
 [tool.pixi.dependencies]
 setuptools = ">=84.2.1,<85"
+
+[tool.pixi.target.linux-64.dependencies]
+c-compiler = ">=2.0.0,<3"
+
+[tool.pixi.target.osx-arm64.dependencies]
 c-compiler = ">=2.0.0,<3"
 
 [tool.pixi.feature.dev.tasks]
