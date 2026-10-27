@@ -24,6 +24,8 @@ def test_known_values(w, args, expected):
     [
         # triangle violation in first triad
         (1, 1, 5, 1, 1, 1),
+        # half-integer triad sum: 5 + 3.5 + 4 = 12.5
+        (5, 4.5, 3.5, 2, 3.5, 4),
     ],
 )
 def test_triangle_gives_zero(w, args):

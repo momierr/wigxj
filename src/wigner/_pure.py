@@ -12,7 +12,7 @@ def _f(x):
 
 def _delta2(a, b, c):
     # Triangle coefficient squared, as an exact fraction
-    if a + b < c or a + c < b or b + c < a:
+    if a + b < c or a + c < b or b + c < a or (a + b + c) % 1:
         return Fraction(0)
     return Fraction(_f(a + b - c) * _f(a - b + c) * _f(-a + b + c), _f(a + b + c + 1))
 
@@ -74,6 +74,7 @@ def clebsch_gordan(j1, m1, j2, m2, j3, m3):
 
 
 def wigner6j(j1, j2, j3, j4, j5, j6):
+
     t1 = j1 + j2 + j3
     t2 = j1 + j5 + j6
     t3 = j4 + j2 + j6
