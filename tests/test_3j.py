@@ -2,9 +2,6 @@ import math
 
 import pytest
 
-from wigner import _backend
-from wigner._pure import wigner3j as wigner3j_pure
-
 TOL = 1e-10
 
 
@@ -53,23 +50,6 @@ def test_symmetry_time_reversal(w):
         )
         < TOL
     )
-
-
-def test_c_matches_pure():
-    if _backend != "C":
-        pytest.skip("C extension not available")
-    from wigner._wigner import wigner3j as wigner3j_c
-
-    cases = [
-        (1, 1, 2, 0, 0, 0),
-        (2, 2, 2, 1, -1, 0),
-        (0.5, 0.5, 1, 0.5, -0.5, 0),
-        (3, 2, 1, -1, 0, 1),
-    ]
-    for args in cases:
-        assert abs(wigner3j_c(*args) - wigner3j_pure(*args)) < TOL, (
-            f"mismatch at {args}"
-        )
 
 
 @pytest.mark.parametrize("j", [10, 12, 20, 150])

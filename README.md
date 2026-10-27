@@ -37,7 +37,7 @@ All functions accept integer or half-integer arguments as plain Python numbers.
 | `wigner9j`       | `(j1, j2, j3, j4, j5, j6, j7, j8, j9)` |
 | `clebsch_gordan` | `(j1, m1, j2, m2, j3, m3)`             |
 
-`wigner9j` requires the C extension. `clebsch_gordan` follows the convention:
+`clebsch_gordan` follows the convention:
 
 $$\langle j_1 m_1 j_2 m_2 | j_3 m_3 \rangle = (-1)^{-j_1+j_2-m_3} \sqrt{2j_3+1} \begin{pmatrix} j_1 & j_2 & j_3 \\ m_1 & m_2 & -m_3 \end{pmatrix}$$
 

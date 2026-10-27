@@ -111,3 +111,17 @@ def wigner6j(j1, j2, j3, j4, j5, j6):
         for k in range(inf_, sup_ + 1)
     )
     return math.copysign(math.sqrt(d2 * s * s), s)
+
+
+def wigner9j(a, b, c, d, e, f, g, h, i):
+    # 9j as a sum over x of products of three 6j symbols
+    lo = max(abs(a - i), abs(d - h), abs(b - f))
+    hi = min(a + i, d + h, b + f)
+    return sum(
+        (-1) ** round(2 * x)
+        * (2 * x + 1)
+        * wigner6j(a, b, c, f, i, x)
+        * wigner6j(d, e, f, b, x, h)
+        * wigner6j(g, h, i, x, a, d)
+        for x in (lo + k for k in range(round(hi - lo) + 1))
+    )

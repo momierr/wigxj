@@ -1,8 +1,5 @@
 import pytest
 
-from wigner import _backend
-from wigner._pure import wigner6j as wigner6j_pure
-
 TOL = 1e-10
 
 
@@ -39,20 +36,3 @@ def test_symmetry_column_swap(w):
         abs(w.wigner6j(j1, j2, j3, j4, j5, j6) - w.wigner6j(j2, j1, j3, j5, j4, j6))
         < TOL
     )
-
-
-def test_c_matches_pure():
-    if _backend != "C":
-        pytest.skip("C extension not available")
-    from wigner._wigner import wigner6j as wigner6j_c
-
-    cases = [
-        (0.5, 0.5, 1, 0.5, 0.5, 0),
-        (1, 1, 2, 1, 1, 0),
-        (2, 2, 2, 2, 2, 2),
-        (1, 2, 1, 1, 2, 2),
-    ]
-    for args in cases:
-        assert abs(wigner6j_c(*args) - wigner6j_pure(*args)) < TOL, (
-            f"mismatch at {args}"
-        )

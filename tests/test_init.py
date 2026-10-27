@@ -1,6 +1,6 @@
 import pytest
 
-from wigner import _backend, init, wigner3j
+from wigner import _backend, clebsch_gordan, init, wigner3j, wigner6j, wigner9j
 
 c_only = pytest.mark.skipif(_backend != "C", reason="C backend only")
 
@@ -10,10 +10,19 @@ def test_init_importable():
 
 
 @c_only
-def test_beyond_table_raises():
+@pytest.mark.parametrize(
+    "fn,args",
+    [
+        (wigner3j, (250, 250, 0, 0, 0, 0)),
+        (wigner6j, (250, 250, 0, 250, 250, 0)),
+        (wigner9j, (250, 250, 0, 250, 250, 0, 0, 0, 0)),
+        (clebsch_gordan, (250, 0, 250, 0, 0, 0)),
+    ],
+)
+def test_beyond_table_raises(fn, args):
     init(200)
     with pytest.raises(ValueError, match="init"):
-        wigner3j(250, 250, 0, 0, 0, 0)
+        fn(*args)
 
 
 @c_only
