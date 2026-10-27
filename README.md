@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/momierr/wigxj/actions/workflows/ci.yml/badge.svg)](https://github.com/momierr/wigxj/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/wigxj.svg)](https://pypi.org/project/wigxj/)
 
 Fast Wigner 3j, 6j, 9j symbols and Clebsch-Gordan coefficients for Python.
 
