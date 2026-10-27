@@ -6,27 +6,37 @@ on:
   pull_request:
 
 jobs:
-  lint:
+  checks:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: lint
+            task: lint
+          - name: format
+            task: format-check
+          - name: mypy
+            task: typecheck
+    name: ${{ matrix.name }}
     steps:
       - uses: actions/checkout@v7
       - uses: prefix-dev/setup-pixi@v0.11.0
         with:
-          environments: dev
           locked: true
-      - run: pixi run lint
-      - run: pixi run format-check
+      - run: pixi run ${{ matrix.task }}
 
   tests:
+    needs: checks
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+    name: tests (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
       - uses: prefix-dev/setup-pixi@v0.11.0
         with:
-          environments: dev
           locked: true
       - run: pixi run test
