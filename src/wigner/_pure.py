@@ -37,10 +37,10 @@ def wigner3j(j1, j2, j3, m1, m2, m3):
     t4 = j1 - m1
     t5 = j2 + m2
 
-    tmin = int(round(max(0, t1, t2)))
-    tmax = int(round(min(t3, t4, t5)))
+    tmin = round(max(0, t1, t2))
+    tmax = round(min(t3, t4, t5))
 
-    phase = (-1) ** int(round(j1 - j2 - m3))
+    phase = (-1) ** round(j1 - j2 - m3)
     d = delta(j1, j2, j3)
 
     sq = math.sqrt(
@@ -68,7 +68,7 @@ def wigner3j(j1, j2, j3, m1, m2, m3):
 
 
 def clebsch_gordan(j1, m1, j2, m2, j3, m3):
-    phase = (-1) ** int(round(-j1 + j2 - m3))
+    phase = (-1) ** round(-j1 + j2 - m3)
     return phase * math.sqrt(2 * j3 + 1) * wigner3j(j1, j2, j3, m1, m2, -m3)
 
 
@@ -78,13 +78,13 @@ def wigner6j(j1, j2, j3, j4, j5, j6):
     t3 = j4 + j2 + j6
     t4 = j4 + j5 + j3
 
-    inf_ = int(round(max(t1, t2, t3, t4)))
+    inf_ = round(max(t1, t2, t3, t4))
 
     t5 = j1 + j2 + j4 + j5
     t6 = j2 + j3 + j5 + j6
     t7 = j3 + j1 + j6 + j4
 
-    sup_ = int(round(min(t5, t6, t7)))
+    sup_ = round(min(t5, t6, t7))
 
     if (
         delta(j1, j2, j3) == 0

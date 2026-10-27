@@ -2,7 +2,7 @@
 
 Fast Wigner 3j, 6j, 9j symbols and Clebsch-Gordan coefficients for Python.
 
-Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL, see src/wigner/_ext/wigxjpf/COPYING.LESSER) for speed.
+Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL, see src/wigner/\_ext/wigxjpf/COPYING.LESSER) for speed.
 Falls back to a pure-Python implementation if no C compiler is available.
 
 ## Installation
@@ -15,6 +15,7 @@ Requires a C compiler (GCC or Clang). To check which backend is active:
 
 ```python
 import wigner
+
 print(wigner._backend)  # "C" or "pure"
 ```
 
@@ -26,12 +27,12 @@ from wigner import wigner3j, wigner6j, wigner9j, clebsch_gordan
 
 All functions accept integer or half-integer arguments as plain Python numbers.
 
-| Function | Signature |
-|---|---|
-| `wigner3j` | `(j1, j2, j3, m1, m2, m3)` |
-| `wigner6j` | `(j1, j2, j3, j4, j5, j6)` |
-| `wigner9j` | `(j1, j2, j3, j4, j5, j6, j7, j8, j9)` |
-| `clebsch_gordan` | `(j1, m1, j2, m2, j3, m3)` |
+| Function         | Signature                              |
+| ---------------- | -------------------------------------- |
+| `wigner3j`       | `(j1, j2, j3, m1, m2, m3)`             |
+| `wigner6j`       | `(j1, j2, j3, j4, j5, j6)`             |
+| `wigner9j`       | `(j1, j2, j3, j4, j5, j6, j7, j8, j9)` |
+| `clebsch_gordan` | `(j1, m1, j2, m2, j3, m3)`             |
 
 `wigner9j` requires the C extension. `clebsch_gordan` follows the convention:
 
@@ -43,6 +44,7 @@ The C backend initializes tables up to j=200 by default. For larger values:
 
 ```python
 from wigner import init
+
 init(500)  # extend tables to j=500
 ```
 
