@@ -1,6 +1,6 @@
 import pytest
 
-from wigner import _backend, clebsch_gordan, init, wigner3j, wigner6j, wigner9j
+from wigxj import _backend, clebsch_gordan, init, wigner3j, wigner6j, wigner9j
 
 c_only = pytest.mark.skipif(_backend != "C", reason="C backend only")
 

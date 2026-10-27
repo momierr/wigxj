@@ -2476,7 +2476,7 @@ packages:
   size: 387535
   timestamp: 1786599623274
 - pypi: ./
-  name: wigner
+  name: wigxj
   requires_dist:
   - numpy>=1.20
   - pytest ; extra == 'dev'

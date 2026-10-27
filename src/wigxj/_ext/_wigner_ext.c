@@ -18,7 +18,7 @@ static int _check_j(int n, const double *js) {
     for (int i = 0; i < n; i++) {
         if (lround(2*js[i]) > g_max_two_j) {
             PyErr_Format(PyExc_ValueError,
-                        "j exceeds max_j=%d; call wigner.init(max_j) first",
+                        "j exceeds max_j=%d; call wigxj.init(max_j) first",
                         g_max_two_j / 2);
             return -1;
         }

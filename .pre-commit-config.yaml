@@ -1,4 +1,4 @@
-exclude: ^src/wigner/_ext/wigxjpf/
+exclude: ^src/wigxj/_ext/wigxjpf/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0

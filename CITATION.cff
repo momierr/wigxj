@@ -4,6 +4,6 @@ authors:
   - family-names: Momier
     given-names: Rodolphe
     orcid: https://orcid.org/0000-0002-0904-3934
-title: "Wigner: a package to compute Wigner symbols"
+title: "wigxj: a package to compute Wigner symbols"
 version: 0.1.0
 date-released: 2026-10-21

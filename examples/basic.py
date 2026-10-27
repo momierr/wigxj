@@ -1,6 +1,6 @@
-"""Basic usage of the wigner package."""
+"""Basic usage of the wigxj package."""
 
-from wigner import clebsch_gordan, wigner3j, wigner6j
+from wigxj import clebsch_gordan, wigner3j, wigner6j
 
 # Wigner 3j symbol
 val = wigner3j(1, 1, 2, 0, 0, 0)

@@ -9,7 +9,7 @@ the matrix element factors as:
 with the selection rule mJ' = mJ + q.
 """
 
-from wigner import wigner3j
+from wigxj import wigner3j
 
 J = 1  # initial state
 J_prime = 2  # final state

@@ -3,11 +3,11 @@ from types import ModuleType
 
 import pytest
 
-import wigner._pure as pure
+import wigxj._pure as pure
 
 c_ext: ModuleType | None
 try:
-    c_ext = importlib.import_module("wigner._wigner")
+    c_ext = importlib.import_module("wigxj._wigner")
 except ImportError:
     c_ext = None
 

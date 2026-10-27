@@ -1,11 +1,11 @@
-# wigner
+# wigxj
 
-[![CI](https://github.com/momierr/wigner/actions/workflows/ci.yml/badge.svg)](https://github.com/momierr/wigner/actions/workflows/ci.yml)
+[![CI](https://github.com/momierr/wigxj/actions/workflows/ci.yml/badge.svg)](https://github.com/momierr/wigxj/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Fast Wigner 3j, 6j, 9j symbols and Clebsch-Gordan coefficients for Python.
 
-Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL, see src/wigner/\_ext/wigxjpf/COPYING.LESSER) for speed.
+Wraps [wigxjpf](https://github.com/nd-nuclear-theory/wigxjpf) (vendored, LGPL, see `src/wigxj/\_ext/wigxjpf/COPYING.LESSER`) for speed.
 Falls back to a pure-Python implementation if no C compiler is available.
 
 ## Installation
@@ -17,15 +17,15 @@ pip install .
 Requires a C compiler (GCC or Clang). To check which backend is active:
 
 ```python
-import wigner
+import wigxj
 
-print(wigner._backend)  # "C" or "pure"
+print(wigxj._backend)  # "C" or "pure"
 ```
 
 ## API
 
 ```python
-from wigner import wigner3j, wigner6j, wigner9j, clebsch_gordan
+from wigxj import wigner3j, wigner6j, wigner9j, clebsch_gordan
 ```
 
 All functions accept integer or half-integer arguments as plain Python numbers.
@@ -46,7 +46,7 @@ $$\langle j_1 m_1 j_2 m_2 | j_3 m_3 \rangle = (-1)^{-j_1+j_2-m_3} \sqrt{2j_3+1} 
 The C backend initializes tables up to j=200 by default. For larger values:
 
 ```python
-from wigner import init
+from wigxj import init
 
 init(500)  # extend tables to j=500
 ```

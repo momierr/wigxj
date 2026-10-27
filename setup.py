@@ -2,11 +2,11 @@ import sys
 
 from setuptools import Extension, setup
 
-_ext_dir = "src/wigner/_ext"
+_ext_dir = "src/wigxj/_ext"
 _wig_dir = f"{_ext_dir}/wigxjpf"
 
 ext = Extension(
-    "wigner._wigner",
+    "wigxj._wigner",
     sources=[
         f"{_ext_dir}/_wigner_ext.c",
         f"{_wig_dir}/src/prime_factor.c",

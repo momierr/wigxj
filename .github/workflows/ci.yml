@@ -40,4 +40,4 @@ jobs:
         with:
           locked: true
       - run: pixi run test
-      - run: pixi run python -c "import wigner; assert wigner._backend == 'C', wigner._backend"
+      - run: pixi run python -c "import wigxj; assert wigxj._backend == 'C', wigxj._backend"
