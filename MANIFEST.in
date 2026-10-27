@@ -1,0 +1,3 @@
+# Files setuptools does not add to the sdist on its own
+recursive-include src/wigxj/_ext *.h
+include src/wigxj/_ext/wigxjpf/COPYING src/wigxj/_ext/wigxjpf/COPYING.LESSER

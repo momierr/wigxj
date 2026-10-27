@@ -63,6 +63,8 @@ identify = ">=2.6"
 mypy = ">=2.4.0,<3"
 hypothesis = ">=6.170.12,<7"
 sympy = ">=1.14.0,<2"
+python-build = ">=1.6.1,<2"
+twine = ">=7.0.0,<8"
 
 [tool.pixi.activation.env]
 PIP_CONFIG_FILE = "/dev/null"
